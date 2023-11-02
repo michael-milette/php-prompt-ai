@@ -45,7 +45,7 @@ function promptAI($prompt) {
     $newmessage->role = 'user';
     $newmessage->content = substr(json_encode($prompt), 1, -1); // Trim extra opening and closing quotes.
     $curlbody['messages'] = [$newmessage]; // An array because it can contain the history of prompts and responses.
-    $curlbody['max_tokens'] = 4 * 1024 - strlen($newmessage->content); // For 4k models.
+    $curlbody['max_tokens'] = 4 * 1024 - strlen(json_encode($curlbody)) - 1; // For 4k models.
 
     // Submit the request.
     $ch = curl_init();
